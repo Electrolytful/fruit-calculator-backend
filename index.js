@@ -30,12 +30,10 @@ app.get('/fruits', (req, res) => {
 app.get('/fruits/:name', (req, res) => {
     let {name} = req.params;
     let object;
-    // error handling if user does not input Upper Case character
-    name = name.toLowerCase();
 
     // loop through the fruits array and find the right object and store in object variable
     fruits.forEach(obj => {
-        if(obj.name.toLowerCase() === name) {
+        if(obj.name.toLowerCase() === name.toLowerCase()) {
             object = obj;
         }
     })
