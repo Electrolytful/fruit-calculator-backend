@@ -53,7 +53,7 @@ app.post('/fruits', (req, res) => {
     let exists = false;
 
     fruits.forEach(obj => {
-        if(object.name === obj.name) {
+        if(object.name.toLowerCase() === obj.name.toLowerCase()) {
             exists = true;
         }
     })
