@@ -1,33 +1,34 @@
-// set up express, .env config to use secret variables, cors to bypass CORS restrictions
+// set up express, .env config to use secret variables
 require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
-const app = express();
 const fruits = require('./fruits.json');
 const fs = require('fs');
-const port = process.env.PORT;
 
-// adding the use of middleware
-app.use(express.json());
-app.use(cors());
+const port = process.env.PORT;
+const server = express();
 
 // make server listen on the specified port
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`App is listening at port ${port}`);
 })
 
+// adding the use of middleware
+server.use(express.json());
+server.use(cors());
+
 // Home route
-app.get('/', (req, res) => {
+server.get('/', (req, res) => {
     res.status(200).send('Hello, Fruity API');
 })
 
 // Return all the fruits route
-app.get('/fruits', (req, res) => {
+server.get('/fruits', (req, res) => {
     res.status(200).send(fruits);
 })
 
 // Return a single fruit route
-app.get('/fruits/:name', (req, res) => {
+server.get('/fruits/:name', (req, res) => {
     let {name} = req.params;
     let object;
 
@@ -47,7 +48,7 @@ app.get('/fruits/:name', (req, res) => {
 })
 
 // adding fruit to the array and writing that change to the fruits.json file
-app.post('/fruits', (req, res) => {
+server.post('/fruits', (req, res) => {
     // check if fruit exists, if not add it using req.body, else return an error
     let object = req.body;
     let exists = false;
@@ -66,4 +67,3 @@ app.post('/fruits', (req, res) => {
         res.status(201).send('New object added successfully!');
     }
 })
-
