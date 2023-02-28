@@ -52,18 +52,28 @@ server.post('/fruits', (req, res) => {
     // check if fruit exists, if not add it using req.body, else return an error
     let object = req.body;
     let exists = false;
+    let idExists = false;
+    object.id = Math.floor(Math.random() * 1000);
 
     fruits.forEach(obj => {
         if(object.name.toLowerCase() === obj.name.toLowerCase()) {
             exists = true;
         }
+
+        if(object.id === obj.id) {
+            idExists = true;
+        }
     })
+
+    while(idExists) {
+        object.id = Math.floor(Math.random() * 1000);
+    }
 
     if(exists) {
         res.status(409).send(`Error: ${object.name} already exists!`);
     } else {
         fruits.push(object);
         fs.writeFileSync('./fruits.json', JSON.stringify(fruits));
-        res.status(201).send('New object added successfully!');
+        res.status(201).send('New fruit added successfully!');
     }
 })
