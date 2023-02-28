@@ -1,5 +1,6 @@
-// set up express and setup .env config to use secret variables
+// set up express, .env config to use secret variables, cors to bypass CORS restrictions
 require('dotenv').config();
+const cors = require('cors');
 const express = require('express');
 const app = express();
 const fruits = require('./fruits.json');
@@ -8,6 +9,7 @@ const port = process.env.PORT;
 
 // adding the use of middleware
 app.use(express.json());
+app.use(cors());
 
 // make server listen on the specified port
 app.listen(port, () => {
