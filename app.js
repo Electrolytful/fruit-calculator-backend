@@ -1,15 +1,14 @@
 // set up express, .env config to use secret variables
 const cors = require('cors');
 const express = require('express');
-const fs = require('fs');
 const fruits = require('./fruits.json');
-const logger = require('./logger.js');
+const logger  = require('./logger.js');
 const app = express();
 
 // adding the use of middleware
-app.use(logger);
 app.use(cors());
 app.use(express.json());
+app.use(logger);
 
 
 // Home route
@@ -68,7 +67,6 @@ app.post('/fruits', (req, res) => {
         res.status(409).send();
     } else {
         fruits.push(object);
-        fs.writeFileSync('./fruits.json', JSON.stringify(fruits));
         res.status(201).send(object);
     }
 })
